@@ -34,7 +34,7 @@ mv config.sample.py config.py
 - Run app with command
 
 ```bash
-python assistant.py
+python main.py
 ```
 
 - Say **JARVIS** to get your command
