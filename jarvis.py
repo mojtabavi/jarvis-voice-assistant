@@ -14,8 +14,7 @@ class Jarvis(object):
         self.interrupted = False
         self.hotword_detector = HotwordDetector(hotword_models, sensitivity=sensitivity)
         self.hotword_said = False
-        vosk_model = Model(vosk_model)
-        self.speech_recofnizer = KaldiRecognizer(vosk_model, 16000)
+        self.vosk_model = Model(vosk_model)
         self.command_mode_time = command_mode_time
         signal.signal(signal.SIGINT, self.on_signal)
 
@@ -39,6 +38,7 @@ class Jarvis(object):
 
     def command_check(self):
         self._cmd_start_t = time.time()
+        speech_recofnizer = KaldiRecognizer(self.vosk_model, 16000)
         p = pyaudio.PyAudio()
         stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
         stream.start_stream()
@@ -47,8 +47,8 @@ class Jarvis(object):
             data = stream.read(4000)
             if len(data) == 0:
                 break
-            if self.speech_recofnizer.AcceptWaveform(data):
-                res = self.speech_recofnizer.Result()
+            if speech_recofnizer.AcceptWaveform(data):
+                res = speech_recofnizer.Result()
                 print(res)
             #else:
                 #print(rec.PartialResult())
@@ -57,7 +57,8 @@ class Jarvis(object):
         stream.stop_stream()
 
     def command_interrupt_check(self):
-        return time.time() - self._cmd_start_t > self.command_mode_time
+        time_is_over = time.time() - self._cmd_start_t > self.command_mode_time
+        return time_is_over or self.interrupted
 
     def run(self):
         while(self.hotword_check() and not self.interrupted):
