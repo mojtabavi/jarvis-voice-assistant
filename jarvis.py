@@ -2,6 +2,7 @@ from assets.snowboy.snowboydecoder import HotwordDetector,play_audio_file
 from vosk import Model, KaldiRecognizer
 import pyaudio
 import time
+import signal
 
 class Jarvis(object):
     def __init__(self, 
@@ -16,6 +17,7 @@ class Jarvis(object):
         vosk_model = Model(vosk_model)
         self.speech_recofnizer = KaldiRecognizer(vosk_model, 16000)
         self.command_mode_time = command_mode_time
+        signal.signal(signal.SIGINT, self.on_signal)
 
     def hotword_interrupt_check(self):
         return self.hotword_said or self.interrupted
@@ -24,6 +26,8 @@ class Jarvis(object):
         self.hotword_said = True
         play_audio_file() 
 
+    def on_signal(self, signal, frame):
+        self.interrupted = True
 
     def hotword_check(self):
         self.hotword_said = False
