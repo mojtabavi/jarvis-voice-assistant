@@ -17,6 +17,7 @@ class Jarvis(object):
         self.vosk_model = Model(vosk_model)
         self.command_mode_time = command_mode_time
         signal.signal(signal.SIGINT, self.on_signal)
+        self.handlers = []
 
     def hotword_interrupt_check(self):
         return self.hotword_said or self.interrupted
@@ -48,8 +49,9 @@ class Jarvis(object):
             if len(data) == 0:
                 break
             if speech_recofnizer.AcceptWaveform(data):
-                res = speech_recofnizer.Result()
-                print(res)
+                cmd = speech_recofnizer.Result()
+                self.handle_command(cmd)
+                print(cmd)
             #else:
                 #print(rec.PartialResult())
         res = speech_recofnizer.PartialResult()
@@ -59,6 +61,27 @@ class Jarvis(object):
     def command_interrupt_check(self):
         time_is_over = time.time() - self._cmd_start_t > self.command_mode_time
         return time_is_over or self.interrupted
+
+    def add_handler(self, func):
+        if callable(func) is False:
+            raise Exception("Arg must be a function")
+        self.handlers.append(func)
+
+    def register_handler(self, *filters):
+        def deco(func):
+            def inner(cmd):
+                for f in filters:
+                    if f(cmd) is not True:
+                        return False
+                func(cmd)    
+            self.handlers.append(inner)
+
+        return deco
+
+    def handle_command(self, cmd):
+        for handler in self.handlers:
+            if handler(cmd) is True:
+                return
 
     def run(self):
         while(self.hotword_check() and not self.interrupted):
