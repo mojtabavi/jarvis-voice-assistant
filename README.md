@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ```
 
 - step four: rename config.sample.py to config.py
+  - and add your personal config to it
 
 ```bash
 mv config.sample.py config.py
