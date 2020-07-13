@@ -3,6 +3,7 @@ from vosk import Model, KaldiRecognizer
 import pyaudio
 import time
 import signal
+import json
 
 class Jarvis(object):
     def __init__(self, 
@@ -49,13 +50,18 @@ class Jarvis(object):
             if len(data) == 0:
                 break
             if speech_recofnizer.AcceptWaveform(data):
-                cmd = speech_recofnizer.Result()
-                self.handle_command(cmd)
-                print(cmd)
+                jdata = json.loads(speech_recofnizer.Result())
+                cmd = jdata.get("text")
+                if cmd:
+                    self.handle_command(cmd)
+                    print(cmd)
             #else:
                 #print(rec.PartialResult())
-        res = speech_recofnizer.PartialResult()
-        print(res)
+            jdata = json.loads(speech_recofnizer.Result())
+            cmd = jdata.get("text")
+            if cmd:
+                    self.handle_command(cmd)
+                    print(cmd)
         stream.stop_stream()
 
     def command_interrupt_check(self):
