@@ -1,4 +1,4 @@
-from snowboy import snowboydecoder
+from assets.snowboy import snowboydecoder
 import sys
 import signal
 
