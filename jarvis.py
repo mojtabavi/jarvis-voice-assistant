@@ -52,7 +52,7 @@ class Jarvis(object):
                 print(res)
             #else:
                 #print(rec.PartialResult())
-        res = self.speech_recofnizer.PartialResult()
+        res = speech_recofnizer.PartialResult()
         print(res)
         stream.stop_stream()
 
