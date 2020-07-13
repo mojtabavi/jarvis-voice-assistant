@@ -1,2 +1,2 @@
-# fedora-voice-assistant
+# JARVIS Voice Assistant
 Personal Voice Assistant with Python3
