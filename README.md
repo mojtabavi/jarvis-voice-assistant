@@ -15,3 +15,23 @@ virtualenv -p python3 .venv
 ```bash
 source .venv/bin/activate
 ```
+
+- step two : install requirements with pip
+
+```bash
+pip install -r requirements.txt
+```
+
+## Run
+
+- Run app with command
+
+```bash
+python jarvis.py
+```
+
+- Say **JARVIS** to get your command
+
+good luck
+
+Seyed Ali Mojtabavi
