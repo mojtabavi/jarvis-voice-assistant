@@ -64,6 +64,3 @@ class Jarvis(object):
         while(self.hotword_check() and not self.interrupted):
             self.command_check()
 
-jarvis = Jarvis(vosk_model="assets/models/vosk-api",
-                hotword_models=["assets/models/JARVIS.pmdl"])
-jarvis.run()

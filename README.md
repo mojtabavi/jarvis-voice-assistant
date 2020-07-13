@@ -16,10 +16,16 @@ virtualenv -p python3 .venv
 source .venv/bin/activate
 ```
 
-- step two : install requirements with pip
+- step three : install requirements with pip
 
 ```bash
 pip install -r requirements.txt
+```
+
+- step four: rename config.sample.py to config.py
+
+```bash
+mv config.sample.py config.py
 ```
 
 ## Run
@@ -27,7 +33,7 @@ pip install -r requirements.txt
 - Run app with command
 
 ```bash
-python jarvis.py
+python assistant.py
 ```
 
 - Say **JARVIS** to get your command
