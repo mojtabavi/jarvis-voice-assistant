@@ -3,7 +3,7 @@
 VOSK_MODEL = "Your Vosk models dir"
 
 #direction of hotword model 
-#default is assets/models/Jarvis.pmdl
+#default is assets/models/JARVIS.pmdl
 HOTWORD_MODELS = [
     "Your hotword(snowboy model) models file"
 ]

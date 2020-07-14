@@ -40,7 +40,7 @@ class Jarvis(object):
 
     def command_check(self):
         self._cmd_start_t = time.time()
-        speech_recofnizer = KaldiRecognizer(self.vosk_model, 16000)
+        speech_recognizer = KaldiRecognizer(self.vosk_model, 16000)
         p = pyaudio.PyAudio()
         stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
         stream.start_stream()
@@ -49,20 +49,21 @@ class Jarvis(object):
             data = stream.read(4000)
             if len(data) == 0:
                 break
-            if speech_recofnizer.AcceptWaveform(data):
-                jdata = json.loads(speech_recofnizer.Result())
+            if speech_recognizer.AcceptWaveform(data): 
+                jdata = json.loads(speech_recognizer.Result())
                 cmd = jdata.get("text")
                 if cmd:
-                    self.handle_command(cmd)
                     print(cmd)
+                    #self.handle_command(cmd)
             #else:
                 #print(rec.PartialResult())
-            jdata = json.loads(speech_recofnizer.Result())
-            cmd = jdata.get("text")
-            if cmd:
-                    self.handle_command(cmd)
-                    print(cmd)
+            #jdata = json.loads(speech_recognizer.Result())
+            #cmd = jdata.get("text")
+            #if cmd:
+            #    print(cmd)
+            #    #self.handle_command(cmd)
         stream.stop_stream()
+        print('say jarvis again')
 
     def command_interrupt_check(self):
         time_is_over = time.time() - self._cmd_start_t > self.command_mode_time
