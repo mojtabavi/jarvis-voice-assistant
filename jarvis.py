@@ -76,8 +76,8 @@ class Jarvis(object):
     def register_handler(self, *filters):
         def deco(func):
             def inner(cmd):
+                kwargs = {}
                 for f in filters:
-                    kwargs = {}
                     ret = f(cmd)
                     if isinstance(ret,dict):
                         kwargs.update(ret)
