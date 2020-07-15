@@ -53,8 +53,7 @@ class Jarvis(object):
                 jdata = json.loads(speech_recognizer.Result())
                 cmd = jdata.get("text")
                 if cmd:
-                    print(cmd)
-                    #self.handle_command(cmd)
+                    self.handle_command(cmd)
             #else:
                 #print(rec.PartialResult())
             #jdata = json.loads(speech_recognizer.Result())
