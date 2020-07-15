@@ -68,9 +68,20 @@ class Jarvis(object):
         time_is_over = time.time() - self._cmd_start_t > self.command_mode_time
         return time_is_over or self.interrupted
 
-    def add_handler(self, func):
+    def add_handler(self, func, *filters):
         if callable(func) is False:
             raise Exception("Arg must be a function")
+
+        def inner(cmd):
+                kwargs = {}
+                for f in filters:
+                    ret = f(cmd)
+                    if isinstance(ret,dict):
+                        kwargs.update(ret)
+                    if ret is False:
+                        return False
+                func(cmd, **kwargs)    
+            
         self.handlers.append(func)
 
     def register_handler(self, *filters):

@@ -10,3 +10,6 @@ def handle(cmd, regexp):
 @assistant.register_handler(contains('alarm'))
 def handle2(cmd):
     print(cmd)
+
+
+# assistant.add_handler(handle2, contains('set'))
