@@ -77,11 +77,14 @@ class Jarvis(object):
         def deco(func):
             def inner(cmd):
                 for f in filters:
-                    if f(cmd) is not True:
+                    kwargs = {}
+                    ret = f(cmd)
+                    if isinstance(ret,dict):
+                        kwargs.update(ret)
+                    if ret is False:
                         return False
-                func(cmd)    
+                func(cmd, **kwargs)    
             self.handlers.append(inner)
-
         return deco
 
     def handle_command(self, cmd):
