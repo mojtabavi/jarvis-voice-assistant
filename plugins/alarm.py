@@ -1,13 +1,13 @@
-from assistant import assistant
+from assistant import assistant,filters
 from filters import regexp, contains
 
 
-@assistant.register_handler(regexp(r'say'))
+@assistant.register_handler(filters.regexp(r'say'))
 def handle(cmd, regexp):
     print(cmd, regexp)
 
 
-@assistant.register_handler(contains('alarm'))
+@assistant.register_handler(filters.contains('alarm'))
 def handle2(cmd):
     print(cmd)
 
