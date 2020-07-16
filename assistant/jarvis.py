@@ -20,6 +20,9 @@ class Jarvis(object):
         self.command_mode_time = command_mode_time
         signal.signal(signal.SIGINT, self.on_signal)
         self.handlers = []
+        self._cmd_start_t = 0
+        self._cmd_start_f = lambda: None
+        self._cmd_stop_f = lambda: None
 
     def hotword_interrupt_check(self):
         return self.hotword_said or self.interrupted
@@ -47,6 +50,7 @@ class Jarvis(object):
         p = pyaudio.PyAudio()
         stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
         stream.start_stream()
+        self._cmd_start_f()
 
         while not self.command_interrupt_check():
             data = stream.read(4000)
@@ -66,10 +70,26 @@ class Jarvis(object):
             #    print(cmd)
             #    #self.handle_command(cmd)
         stream.stop_stream()
+        self._cmd_stop_f()
 
     def command_interrupt_check(self):
         time_is_over = time.time() - self._cmd_start_t > self.command_mode_time
         return time_is_over or self.interrupted
+
+    def stop_command_check(self):
+        self._cmd_start_t = 0
+
+    def on_command_mode_start(self, func):
+        if callable(func) is False:
+            raise Exception("Arg must be callable")
+        self._cmd_start_f = func
+        return func
+
+    def on_command_mode_stop(self, func):
+        if callable(func) is False:
+            raise Exception("Arg must be callable")
+        self._cmd_stop_f = func
+        return func
 
     def add_handler(self, func, *filters):
         if callable(func) is False:

@@ -1,8 +1,9 @@
-from assistant import assistant
+from assistant import assistant,utils
 from assistant.utils import play
 import config
 import importlib
 import traceback
+import random
 
 
 for plug in config.PLUGINS:
@@ -11,6 +12,21 @@ for plug in config.PLUGINS:
         importlib.import_module(f'{config.PLUGINS_DIR}.{plug}')
     except Exception:
         traceback.print_exc()
+
+
+
+
+@assistant.on_command_mode_start
+def on_cmd_start():
+    aus = "jarvis-welcome.wav"
+    utils.play(aus)
+
+
+@assistant.on_command_mode_stop
+def on_cmd_stop():
+    aus = "jarvis-welcome.wav"
+    utils.play(aus)
+
 
 
 assistant.run()
