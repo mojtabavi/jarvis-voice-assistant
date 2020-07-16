@@ -24,8 +24,9 @@ def on_cmd_start():
 
 @assistant.on_command_mode_stop
 def on_cmd_stop():
-    aus = "jarvis.wav"
-    utils.play(aus)
+    # aus = "jarvis.wav"
+    # utils.play(aus)
+    print("command off")
 
 
 
