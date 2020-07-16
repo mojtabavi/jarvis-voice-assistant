@@ -1,2 +1,7 @@
+playsound==1.2.2
 PyAudio==0.2.11
+ruamel.yaml==0.16.10
+ruamel.yaml.clib==0.2.0
+vext==0.7.3
+vext.gi==0.7.0
 vosk==0.3.10
