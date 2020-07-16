@@ -18,13 +18,13 @@ for plug in config.PLUGINS:
 
 @assistant.on_command_mode_start
 def on_cmd_start():
-    aus = "jarvis-welcome.wav"
+    aus = "jarvis.wav"
     utils.play(aus)
 
 
 @assistant.on_command_mode_stop
 def on_cmd_stop():
-    aus = "jarvis-welcome.wav"
+    aus = "jarvis.wav"
     utils.play(aus)
 
 
