@@ -4,7 +4,7 @@ from assistant import assistant,filters,utils
 
 @assistant.register_handler(filters.regexp(r'say'))
 def handle(cmd, regexp):
-    utils.play('jarvis-welcome.wav')
+    utils.play('jarvis-intro.wav')
     print(cmd, regexp)
 
 
