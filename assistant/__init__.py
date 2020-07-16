@@ -1,5 +1,6 @@
 from .jarvis import Jarvis
 from . import filters
+from . import utils
 import config
 
 assistant = Jarvis(
@@ -12,5 +13,6 @@ assistant = Jarvis(
 
 __all__ = [
      "assistant",
-     "filters"
+     "filters",
+     "utils"
 ]
