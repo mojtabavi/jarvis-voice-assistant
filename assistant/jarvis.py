@@ -124,6 +124,7 @@ class Jarvis(object):
     def handle_command(self, cmd):
         for handler in self.handlers:
             if handler(cmd) is True:
+                self.stop_command_check()
                 return
 
     def run(self):
