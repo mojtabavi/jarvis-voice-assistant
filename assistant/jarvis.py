@@ -5,6 +5,7 @@ import time
 import signal
 import json
 
+
 class Jarvis(object):
     def __init__(self, 
                 vosk_model: str, 
