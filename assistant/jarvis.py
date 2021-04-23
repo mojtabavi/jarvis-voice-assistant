@@ -4,7 +4,11 @@ import pyaudio
 import time
 import signal
 import json
+import os
 
+TOP_DIR = os.path.dirname(os.path.abspath(__file__))
+JARVIS_INTRO = os.path.join(TOP_DIR, "audios/jarvis.wav")
+print(TOP_DIR)
 
 class Jarvis(object):
     def __init__(self, 
@@ -45,6 +49,7 @@ class Jarvis(object):
 
     def command_check(self):
         print('+ Switch To Command Mode')
+        play_audio_file(JARVIS_INTRO)
         self._cmd_start_t = time.time()
         speech_recognizer = KaldiRecognizer(self.vosk_model, 16000)
         p = pyaudio.PyAudio()
