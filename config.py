@@ -1,4 +1,4 @@
-VOSK_MODEL = "assets/models/vosk-api"
+VOSK_MODEL = "assets/models/vosk-model-small-fa-0.5"
 
 HOTWORD_MODELS = [
     "assets/models/JARVIS.pmdl"
